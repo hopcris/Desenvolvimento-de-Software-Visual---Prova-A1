@@ -6,9 +6,17 @@ using Microsoft.EntityFrameworkCore.Sqlite.Diagnostics.Internal;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDataContext>();
 
+builder.Services.AddCors(options =>
+    options.AddPolicy("Acesso Total",
+        configs => configs
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod())
+);
+
 var app = builder.Build();
 
-app.MapGet("/", () => "COLOQUE O SEU NOME");
+app.MapGet("/", () => "Crisitano Hopfer Lima");
 
 //ENDPOINTS DE TAREFA
 //GET: http://localhost:5273/api/tarefas/listar
@@ -33,8 +41,8 @@ app.MapPost("/api/tarefas/cadastrar", ([FromServices] AppDataContext ctx, [FromB
 app.MapPut("/api/tarefas/alterar/{id}", ([FromServices] AppDataContext ctx, [FromRoute] string id) =>
 {
     var tarefa = ctx.Tarefas.Find(id);
-
-    if (tarefa.Status == "Não iniciada")
+    
+    if (tarefa.Status == "Não iniciada" || tarefa.Status == null)
     {
         tarefa.Status = "Em andamento";
         ctx.SaveChanges();
@@ -66,6 +74,10 @@ app.MapGet("/api/tarefas/concluidas", ([FromServices] AppDataContext ctx) =>
      var tarefasConcluidas = ctx.Tarefas.Where(t => t.Status == "Concluída").ToList();
 
     return Results.Ok(tarefasConcluidas);
+
+
 });
+
+app.UseCors("Acesso Total");
 
 app.Run();

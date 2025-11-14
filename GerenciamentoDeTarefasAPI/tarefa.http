@@ -15,3 +15,6 @@ GET http://localhost:5022/api/tarefas/naoconcluidas
 ###Listar todas as concluidas
 GET http://localhost:5022/api/tarefas/concluidas
 
+###Alterar
+PUT  http://localhost:5022/api/tarefas/alterar/2f1b7dc1-3b9a-4e1a-a389-7f5d2f1c8f3e
+
