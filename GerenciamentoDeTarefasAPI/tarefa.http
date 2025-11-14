@@ -1,0 +1,17 @@
+### Listar todas as tarefas
+GET http://localhost:5022/api/tarefas/listar
+
+### Cadastrar uma nova tarefa
+POST http://localhost:5022/api/tarefas/cadastrar
+Content-Type: application/json
+
+{
+    "titulo": "Estudar Node.js"
+}
+
+###Listar todas as tarefas nao concluidas
+GET http://localhost:5022/api/tarefas/naoconcluidas
+
+###Listar todas as concluidas
+GET http://localhost:5022/api/tarefas/concluidas
+
